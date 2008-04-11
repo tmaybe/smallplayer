@@ -8,7 +8,9 @@ Embed smallplayer in a web page using the Object and Embed tags, as demonstrated
 You can pass three variables to smallplayer via the Object and Embed tags. They are:
 
 *videoURL*: the URL to the video file
+
 *bgColor*: a background color for the player, in hex format, formatted like so: 0xffffff
+
 *holderURL*: the URL to an image that will load and display before the play button is clicked (optional)
 
 See the included index.html file for an example of these three variables being passed to smallplayer.
