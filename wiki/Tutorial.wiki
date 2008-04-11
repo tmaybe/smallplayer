@@ -15,6 +15,6 @@ You can pass three variables to smallplayer via the Object and Embed tags. They 
 
 See the included index.html file for an example of these three variables being passed to smallplayer.
 
-= File Formats =
+= Video File Formats =
 
 Smallplayer will play video files in any [http://www.adobe.com/products/hdvideo/supported_technologies/ video format supported by the Flash player].
