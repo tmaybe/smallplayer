@@ -1,6 +1,10 @@
 #summary How to implement smallplayer
 #labels Featured,Phase-Deploy
 
+= REQUIREMENTS =
+
+Smallplayer requires the Flash Player version 9 or higher to use, and Flash CS3 or higher to edit.
+
 = HTML =
 
 Embed smallplayer in a web page using the Object and Embed tags, as demonstrated in the included index.html file, and as described at [http://livedocs.adobe.com/flash/9.0/UsingFlash/help.html?content=WSd60f23110762d6b883b18f10cb1fe1af6-7ba8.html adobe.com].
