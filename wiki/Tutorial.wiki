@@ -1,13 +1,18 @@
 #summary How to implement smallplayer
+#labels Featured,Phase-Deploy
 
 = HTML =
 
 Embed smallplayer in a web page using the Object and Embed tags, as demonstrated in the included index.html file, and as described at [http://livedocs.adobe.com/flash/9.0/UsingFlash/help.html?content=WSd60f23110762d6b883b18f10cb1fe1af6-7ba8.html adobe.com]
 
+You can pass three variables to smallplayer via the Object and Embed tags. They are:
 
-= Details =
+*videoURL*: the URL to the video file
+*bgColor*: a background color for the player, in hex format, formatted like so: 0xffffff
+*holderURL*: the URL to an image that will load and display before the play button is clicked (optional)
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+See the included index.html file for an example of these three variables being passed to smallplayer.
+
+= File Formats =
+
+Smallplayer will play video files in any [http://www.adobe.com/products/hdvideo/supported_technologies/ video format supported by the Flash player].
