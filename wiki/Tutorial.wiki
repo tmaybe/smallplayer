@@ -3,7 +3,7 @@
 
 = HTML =
 
-Embed smallplayer in a web page using the Object and Embed tags, as demonstrated in the included index.html file, and as described at [http://livedocs.adobe.com/flash/9.0/UsingFlash/help.html?content=WSd60f23110762d6b883b18f10cb1fe1af6-7ba8.html adobe.com]
+Embed smallplayer in a web page using the Object and Embed tags, as demonstrated in the included index.html file, and as described at [http://livedocs.adobe.com/flash/9.0/UsingFlash/help.html?content=WSd60f23110762d6b883b18f10cb1fe1af6-7ba8.html adobe.com].
 
 You can pass three variables to smallplayer via the Object and Embed tags. They are:
 
