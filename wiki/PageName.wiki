@@ -1,4 +1,4 @@
-#summary Changes in smallpower
+#summary Changes in smallplayer
 
 = Change Log =
 
