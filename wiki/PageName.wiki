@@ -1,0 +1,5 @@
+#summary Changes in smallpower
+
+= Change Log =
+
+*Version 0.2:* Fixed a bug where the player would try to draw its controls before the stage dimensions were available.
