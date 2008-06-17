@@ -1,4 +1,5 @@
 #summary Changes in smallplayer
+#labels Featured
 
 = Change Log =
 
