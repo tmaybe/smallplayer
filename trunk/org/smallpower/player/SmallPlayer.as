@@ -9,6 +9,7 @@ package org.smallpower.player {
   import flash.text.TextField;
   import flash.text.TextFieldAutoSize;
   import gs.TweenLite;
+  import flash.utils.Timer;
   
   public class SmallPlayer extends MovieClip {
     // depths
@@ -24,51 +25,65 @@ package org.smallpower.player {
     private var _holder:Sprite;
     private var _holderLoader:Loader;
     private var _duration:Number;
+    private var _timer:Timer;
     
     private var _output:TextField;
     
     public function SmallPlayer() {
+      // :TODO: tmp set up the output field
+      //_output = new TextField();
+      //_output.autoSize = TextFieldAutoSize.LEFT;
+      //addChild(_output);
+
       // set the stage defaults
       stage.scaleMode = StageScaleMode.NO_SCALE;
       stage.align = StageAlign.TOP_LEFT;
 
-      // :TODO: tmp set up the output field
-      //_output = new TextField();
-      //_output.autoSize = TextFieldAutoSize.LEFT;
-
-      // remember the video URL
-      _videoURL = root.loaderInfo.parameters.videoURL;
-
-      // default total time
-      _duration = 1;
-
-      // draw the background
-      var bgColor:Number = (root.loaderInfo.parameters.bgColor == undefined) ? Prefs.BACKGROUND_COLOR : Number(root.loaderInfo.parameters.bgColor);
-      _bg = new Sprite();
-      _bg.graphics.beginFill(bgColor);
-      _bg.graphics.lineStyle();
-      _bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
-      _bg.graphics.endFill();
-      addChildAt(_bg, BACKGROUND_DEPTH);
-
-      // start loading the video
-      startLoadingVideo();
-
-      // if there's a placeholder graphic, load it now
-      if (root.loaderInfo.parameters.holderURL != undefined) {
-        // create the sprite and the loader
-        _holder = new Sprite();
-        _holderLoader = new Loader();
-        _holderLoader.load(new URLRequest(root.loaderInfo.parameters.holderURL));
-        // listen to loader events
-        _holderLoader.contentLoaderInfo.addEventListener(Event.INIT, holderInitListener);
-        _holderLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, holderErrorListener);
-      } else {
-        // show the play/pause button
-        showPlayButton();
-      }
+      // get things started
+      initPlayer();
     }
     
+    private function initPlayer():void {
+      // if the player dimensions are available...
+      if (dimensionsAvailable()) {
+        // remember the video URL
+        _videoURL = root.loaderInfo.parameters.videoURL;
+
+        // default total time
+        _duration = 1;
+
+        // draw the background
+        showBackground();
+
+        // start loading the video
+        startLoadingVideo();
+
+        // if there's a placeholder graphic, load it now
+        if (root.loaderInfo.parameters.holderURL != undefined) {
+          // create the sprite and the loader
+          _holder = new Sprite();
+          _holderLoader = new Loader();
+          _holderLoader.load(new URLRequest(root.loaderInfo.parameters.holderURL));
+          // listen to loader events
+          _holderLoader.contentLoaderInfo.addEventListener(Event.INIT, holderInitListener);
+          _holderLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, holderErrorListener);
+        } else {
+          // show the play/pause button
+          showPlayButton();
+        }
+      } else {
+        // try again in a few ms
+        _timer = new Timer(100, 1);
+        _timer.addEventListener(TimerEvent.TIMER, timerListener);
+        _timer.start();
+      }
+    }
+
+    private function timerListener(eventObj:TimerEvent):void {
+      // try to init again
+      initPlayer();
+    }
+
     private function holderInitListener(eventObj:Event):void {
       // add the holder image just above the background
       _holder.addChild(_holderLoader.content);
@@ -82,9 +97,23 @@ package org.smallpower.player {
       showPlayButton();
     }
     
+    private function showBackground():void {
+      // create the bg sprite
+      _bg = new Sprite();
+      // get the color
+      var bgColor:Number = (root.loaderInfo.parameters.bgColor == undefined) ? Prefs.BACKGROUND_COLOR : Number(root.loaderInfo.parameters.bgColor);
+      // draw the background
+      _bg.graphics.beginFill(bgColor);
+      _bg.graphics.lineStyle();
+      _bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
+      _bg.graphics.endFill();
+      addChildAt(_bg, BACKGROUND_DEPTH);
+    }
+    
     private function showPlayButton():void {
-      // create & position the play/pause button
+      // create the button
       _playButton = new PlayButton(Prefs.INITIAL_STATE, stage.stageWidth, stage.stageHeight);
+      // position the button
       _playButton.x = stage.stageWidth / 2;
       _playButton.y = stage.stageHeight / 2;
       // subscribe to the button click event
@@ -92,6 +121,10 @@ package org.smallpower.player {
       _playButton.addEventListener(PlayButtonEvent.PLAY_CLICK, firstPlayClickListener);
       // display the button
       addChildAt(_playButton, BUTTONS_DEPTH);
+    }
+
+    private function dimensionsAvailable():Boolean {
+      return (stage.stageWidth > 0 && stage.stageHeight > 0);
     }
     
     private function firstPlayClickListener(eventObj:PlayButtonEvent):void {
